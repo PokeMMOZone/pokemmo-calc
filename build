@@ -9,7 +9,7 @@ const rootDir = '.';
 
 // update version
 function makeCachebuster(template, output) {
-	let indexContents = fs.readFileSync(path.resolve(rootDir, template), {encoding: 'utf8'});
+	let indexContents = fs.readFileSync(path.resolve(rootDir, template), { encoding: 'utf8' });
 
 	// add hashes to js and css files
 	process.stdout.write("Updating hashes... ");
@@ -19,7 +19,7 @@ function makeCachebuster(template, output) {
 			const filename = c.replace('//play.pokemonshowdown.com/', '../../play.pokemonshowdown.com/');
 			const fstr = fs.readFileSync(path.resolve(rootDir, 'dist', filename), 'utf8');
 			hash = crypto.createHash('md5').update(fstr).digest('hex').substr(0, 8);
-		} catch (e) {}
+		} catch (e) { }
 
 		return b + '="./' + c + '?' + hash + '"';
 	}).replace(/\.template\.html/g, '.html');
@@ -32,7 +32,7 @@ function cpdir(src, dest) {
 	console.log("Copying `" + src + "` to `" + dest + "`");
 	try {
 		fs.mkdirSync(dest, '0755');
-	} catch(e) {
+	} catch (e) {
 		if (e.code != 'EEXIST') throw e;
 	}
 	for (const file of fs.readdirSync(src)) {
@@ -46,13 +46,23 @@ function cpdir(src, dest) {
 			const contents = fs.readFileSync(path.join(src, file), 'utf8').replace(/^exports.* = void 0;$/gm, '');
 			fs.writeFileSync(path.join(dest, file), contents);
 		} else {
-			fs.copyFileSync(path.join(src, file),path.join(dest, file));
+			fs.copyFileSync(path.join(src, file), path.join(dest, file));
 		}
 	}
 }
 
+function deleteFile(filePath) {
+	console.log("Deleting file `" + filePath + "`");
+	try {
+		fs.unlinkSync(filePath);
+		console.log("Deleted `" + filePath + "`");
+	} catch (e) {
+		console.error("Error deleting `" + filePath + "`:", e);
+	}
+}
+
 if (process.argv[2] !== 'view') {
-	require('child_process').execSync('npm --prefix calc/ run compile', {stdio: 'inherit'});
+	require('child_process').execSync('npm --prefix calc/ run compile', { stdio: 'inherit' });
 }
 
 cpdir('src', 'dist');
@@ -60,3 +70,7 @@ cpdir('calc/dist', 'dist/calc');
 makeCachebuster('dist/honkalculate.template.html', 'dist/honkalculate.html');
 makeCachebuster('dist/index.template.html', 'dist/index.html');
 makeCachebuster('dist/randoms.template.html', 'dist/randoms.html');
+// Delete the .template.html files
+deleteFile('dist/honkalculate.template.html');
+deleteFile('dist/index.template.html');
+deleteFile('dist/randoms.template.html');
