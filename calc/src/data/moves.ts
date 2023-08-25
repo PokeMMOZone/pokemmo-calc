@@ -1680,7 +1680,7 @@ delete BW['Faint Attack'];
 
 const XY_PATCH: {[name: string]: DeepPartial<MoveData>} = {
   'Ice Ball': {isBullet: true},
-  'Knock Off': {bp: 65},
+  // 'Knock Off': {bp: 65},
   Thief: {bp: 60},
   Barrage: {isBullet: true},
   Bubble: {bp: 40},
