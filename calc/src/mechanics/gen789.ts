@@ -967,12 +967,15 @@ export function calculateBPModsSMSSSV(
       attacker.hasStatus('psn', 'tox') && move.category === 'Physical') ||
     (attacker.hasAbility('Mega Launcher') && move.flags.pulse) ||
     (attacker.hasAbility('Strong Jaw') && move.flags.bite) ||
-    (attacker.hasAbility('Steely Spirit') && move.hasType('Steel')) ||
-    (attacker.hasAbility('Sharpness') && move.flags.slicing)
+    (attacker.hasAbility('Steely Spirit') && move.hasType('Steel')) // ||
+    // (attacker.hasAbility('Sharpness') && move.flags.slicing)
   ) {
     bpMods.push(6144);
     desc.attackerAbility = attacker.ability;
-  }
+  } else if (attacker.hasAbility('Sharpness') && move.flags.slicing) {
+    bpMods.push(5325);  // 1.3 multiplier
+    desc.attackerAbility = attacker.ability;
+}
 
   const aura = `${move.type} Aura`;
   const isAttackerAura = attacker.hasAbility(aura);
