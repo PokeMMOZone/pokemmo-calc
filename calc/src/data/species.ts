@@ -3662,13 +3662,13 @@ const DPP_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
     nfe: true,
     abilities: {0: 'Keen Eye'},
   },
-  Stratagem: {
-    types: ['Rock'],
-    bs: {hp: 90, at: 60, df: 65, sa: 120, sd: 70, sp: 130},
-    weightkg: 45,
-    gender: 'N',
-    abilities: {0: 'Levitate'},
-  },
+  // Stratagem: {
+  //   types: ['Rock'],
+  //   bs: {hp: 90, at: 60, df: 65, sa: 120, sd: 70, sp: 130},
+  //   weightkg: 45,
+  //   gender: 'N',
+  //   abilities: {0: 'Levitate'},
+  // },
   Stunky: {
     types: ['Poison', 'Dark'],
     bs: {hp: 63, at: 63, df: 47, sa: 41, sd: 41, sp: 74},
