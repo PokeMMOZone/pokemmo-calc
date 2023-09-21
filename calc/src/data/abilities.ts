@@ -244,6 +244,7 @@ const SM = XY.concat([
   'Shadow Shield',
   'Shields Down',
   'Slush Rush',
+  'Snow Plow',
   'Stamina',
   'Stakeout',
   'Steelworker',
