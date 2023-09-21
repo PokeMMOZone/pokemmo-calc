@@ -348,6 +348,7 @@ const XY = BW.concat(
   [
     ...Object.keys(MEGA_STONES),
     'Assault Vest',
+    'Assault Gear',
     'Blue Orb',
     'Fairy Gem',
     'Jaw Fossil',
