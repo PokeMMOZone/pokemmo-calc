@@ -277,6 +277,7 @@ const SS = SM.concat([
   'Mimicry',
   'Mirror Armor',
   'Neutralizing Gas',
+  'Reactive Gas',
   'Pastel Veil',
   'Perish Body',
   'Power Spot',

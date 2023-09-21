@@ -106,6 +106,7 @@ export function calculateSMSSSV(
   const defenderIgnoresAbility = defender.hasAbility(
     'Full Metal Body',
     'Neutralizing Gas',
+    'Reactive Gas',
     'Prism Armor',
     'Shadow Shield'
   );
