@@ -1,5 +1,5 @@
 # This is an edited version of the Smogon Calculator for use with PokeMMO. The below is from the original readme and is kept for reference.
-
+Info: https://gamer2020.net/pokemmo-team-builder/
 
 
 # Pokémon Damage Calculator
