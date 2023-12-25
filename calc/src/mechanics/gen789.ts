@@ -974,7 +974,7 @@ export function calculateBPModsSMSSSV(
     bpMods.push(6144);
     desc.attackerAbility = attacker.ability;
   } else if (attacker.hasAbility('Sharpness') && move.flags.slicing) {
-    bpMods.push(5734);  // 1.4 multiplier
+    bpMods.push(6144);  // 1.5 multiplier
     desc.attackerAbility = attacker.ability;
 }
 
