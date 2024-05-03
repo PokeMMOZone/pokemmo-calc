@@ -178,18 +178,21 @@ export function calculateSMSSSV(
     'Power Construct', 'RKS System', 'Schooling', 'Shields Down',
     'Stance Change', 'Tera Shift', 'Zen Mode', 'Zero to Hero',
   ];
-
-  if ((attacker.hasAbility('Neutralizing Gas') || (attacker.hasAbility('Reactive Gas'))) &&
+  
+  // Check if the attacker has either Neutralizing Gas or Reactive Gas and the defender's ability is not in the ignores list
+  if ((attacker.hasAbility('Neutralizing Gas') || attacker.hasAbility('Reactive Gas')) &&
     !ignoresNeutralizingGas.includes(defender.ability || '')) {
     desc.attackerAbility = attacker.ability;
     defender.ability = '' as AbilityName;
   }
-
-  if ((defender.hasAbility('Neutralizing Gas') || (attacker.hasAbility('Reactive Gas'))) &&
+  
+  // Check if the defender has either Neutralizing Gas or Reactive Gas and the attacker's ability is not in the ignores list
+  if ((defender.hasAbility('Neutralizing Gas') || defender.hasAbility('Reactive Gas')) &&
     !ignoresNeutralizingGas.includes(attacker.ability || '')) {
     desc.defenderAbility = defender.ability;
     attacker.ability = '' as AbilityName;
   }
+  
 
   // Merciless does not ignore Shell Armor, damage dealt to a poisoned Pokemon with Shell Armor
   // will not be a critical hit (UltiMario)
