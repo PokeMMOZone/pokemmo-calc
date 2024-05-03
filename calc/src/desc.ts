@@ -23,6 +23,7 @@ export interface RawDesc {
   defenseEVs?: string;
   hits?: number;
   alliesFainted?: number;
+  isStellarFirstUse?: boolean;
   isBeadsOfRuin?: boolean;
   isSwordOfRuin?: boolean;
   isTabletsOfRuin?: boolean;
@@ -63,8 +64,8 @@ export function display(
   err = true
 ) {
   const [minDamage, maxDamage] = damageRange(damage);
-  const min = (typeof minDamage === 'number' ? minDamage : minDamage[0] + minDamage[1]) * move.hits;
-  const max = (typeof maxDamage === 'number' ? maxDamage : maxDamage[0] + maxDamage[1]) * move.hits;
+  const min = (typeof minDamage === 'number' ? minDamage : minDamage[0] + minDamage[1]);
+  const max = (typeof maxDamage === 'number' ? maxDamage : maxDamage[0] + maxDamage[1]);
 
   const minDisplay = toDisplay(notation, min, defender.maxHP());
   const maxDisplay = toDisplay(notation, max, defender.maxHP());
@@ -86,8 +87,8 @@ export function displayMove(
   notation = '%'
 ) {
   const [minDamage, maxDamage] = damageRange(damage);
-  const min = (typeof minDamage === 'number' ? minDamage : minDamage[0] + minDamage[1]) * move.hits;
-  const max = (typeof maxDamage === 'number' ? maxDamage : maxDamage[0] + maxDamage[1]) * move.hits;
+  const min = (typeof minDamage === 'number' ? minDamage : minDamage[0] + minDamage[1]);
+  const max = (typeof maxDamage === 'number' ? maxDamage : maxDamage[0] + maxDamage[1]);
 
   const minDisplay = toDisplay(notation, min, defender.maxHP());
   const maxDisplay = toDisplay(notation, max, defender.maxHP());
@@ -277,11 +278,7 @@ export function getKOChance(
 
   // multi-hit moves have too many possibilities for brute-forcing to work, so reduce it
   // to an approximate distribution
-  let qualifier = '';
-  if (move.hits > 1) {
-    qualifier = 'approx. ';
-    damage = squashMultihit(gen, damage, move.hits, err);
-  }
+  let qualifier = move.hits > 1 ? 'approx. ' : '';
 
   const hazardsText = hazards.texts.length > 0
     ? ' after ' + serializeText(hazards.texts)
@@ -291,20 +288,28 @@ export function getKOChance(
       ? ' after ' + serializeText(hazards.texts.concat(eot.texts))
       : '';
 
+  function KOChance(
+    chance: number | undefined,
+    n: number,
+    multipleTurns = false,
+  ) {
+    if (chance === 0) return {chance: undefined, n, text: qualifier + 'not a KO'};
+    let text = chance === undefined ? qualifier + 'possible '
+      : chance === 1 ? qualifier || 'guaranteed '
+      // prevent displaying misleading 100% or 0% chances
+      : `${qualifier}${Math.max(Math.min(Math.round(chance * 1000), 999), 1) / 10}% chance to `;
+    // using the number of hits we can determine the type of KO we are checking for
+    text += n === 1 ? 'OHKO' + hazardsText
+      : (multipleTurns ? `KO in ${n} turns` : `${n}HKO`) + afterText;
+    return {chance, n, text};
+  }
+
   if ((move.timesUsed === 1 && move.timesUsedWithMetronome === 1) || move.isZ) {
     const chance = computeKOChance(
       damage, defender.curHP() - hazards.damage, 0, 1, 1, defender.maxHP(), toxicCounter
     );
-    if (chance === 1) {
-      return {chance, n: 1, text: `guaranteed OHKO${hazardsText}`}; // eot wasn't considered
-    } else if (chance > 0) {
-      // note: still not accounting for EOT due to poor eot damage handling
-      return {
-        chance,
-        n: 1,
-        text: qualifier + Math.round(chance * 1000) / 10 + `% chance to OHKO${hazardsText}`,
-      };
-    }
+    // note: still not accounting for EOT due to poor eot damage handling
+    if (chance > 0) return KOChance(chance, 1);
 
     // Parental Bond's combined first + second hit only is accurate for chance to OHKO, for
     // multihit KOs its only approximated. We should be doing squashMultihit here instead of
@@ -319,15 +324,7 @@ export function getKOChance(
       const chance = computeKOChance(
         damage, defender.curHP() - hazards.damage, eot.damage, i, 1, defender.maxHP(), toxicCounter
       );
-      if (chance === 1) {
-        return {chance, n: i, text: `${qualifier || 'guaranteed '}${i}HKO${afterText}`};
-      } else if (chance > 0) {
-        return {
-          chance,
-          n: i,
-          text: qualifier + Math.round(chance * 1000) / 10 + `% chance to ${i}HKO${afterText}`,
-        };
-      }
+      if (chance > 0) return KOChance(chance, i);
     }
 
     for (let i = 5; i <= 9; i++) {
@@ -335,12 +332,13 @@ export function getKOChance(
         predictTotal(damage[0], eot.damage, i, 1, toxicCounter, defender.maxHP()) >=
         defender.curHP() - hazards.damage
       ) {
-        return {chance: 1, n: i, text: `${qualifier || 'guaranteed '}${i}HKO${afterText}`};
+        return KOChance(1, i);
       } else if (
         predictTotal(damage[damage.length - 1], eot.damage, i, 1, toxicCounter, defender.maxHP()) >=
         defender.curHP() - hazards.damage
       ) {
-        return {n: i, text: qualifier + `possible ${i}HKO${afterText}`};
+        // possible but no concrete chance
+        return KOChance(undefined, i);
       }
     }
   } else {
@@ -352,55 +350,34 @@ export function getKOChance(
       defender.maxHP(),
       toxicCounter
     );
-    if (chance === 1) {
-      return {
-        chance,
-        n: move.timesUsed,
-        text: `${qualifier || 'guaranteed '}KO in ${move.timesUsed} turns${afterText}`,
-      };
-    } else if (chance > 0) {
-      return {
-        chance,
-        n: move.timesUsed,
-        text:
-          qualifier +
-          Math.round(chance * 1000) / 10 +
-          `% chance to ${move.timesUsed}HKO${afterText}`,
-      };
-    }
+    if (chance > 0) return KOChance(chance, move.timesUsed, chance === 1);
 
     if (predictTotal(
       damage[0],
       eot.damage,
-      move.hits,
+      1,
       move.timesUsed,
       toxicCounter,
       defender.maxHP()
     ) >=
       defender.curHP() - hazards.damage
     ) {
-      return {
-        chance: 1,
-        n: move.timesUsed,
-        text: `${qualifier || 'guaranteed '}KO in ${move.timesUsed} turns${afterText}`,
-      };
+      return KOChance(1, move.timesUsed, true);
     } else if (
       predictTotal(
         damage[damage.length - 1],
         eot.damage,
-        move.hits,
+        1,
         move.timesUsed,
         toxicCounter,
         defender.maxHP()
       ) >=
       defender.curHP() - hazards.damage
     ) {
-      return {
-        n: move.timesUsed,
-        text: qualifier + `possible KO in ${move.timesUsed} turns${afterText}`,
-      };
+      // possible but no real idea
+      return KOChance(undefined, move.timesUsed, true);
     }
-    return {n: move.timesUsed, text: qualifier + 'not a KO'};
+    return KOChance(0, move.timesUsed);
   }
 
   return {chance: 0, n: 0, text: ''};
@@ -862,6 +839,11 @@ function buildDescription(description: RawDesc, attacker: Pokemon, defender: Pok
   if (description.attackerTera) {
     output += `Tera ${description.attackerTera} `;
   }
+
+  if (description.isStellarFirstUse) {
+    output += '(First Use) ';
+  }
+
   if (description.isBeadsOfRuin) {
     output += 'Beads of Ruin ';
   }
@@ -873,16 +855,16 @@ function buildDescription(description: RawDesc, attacker: Pokemon, defender: Pok
     output += 'Helping Hand ';
   }
   if (description.isFlowerGiftAttacker) {
-    output += ' with an ally\'s Flower Gift ';
+    output += 'with an ally\'s Flower Gift ';
   }
   if (description.isBattery) {
-    output += ' Battery boosted ';
+    output += 'Battery boosted ';
   }
   if (description.isPowerSpot) {
-    output += ' Power Spot boosted ';
+    output += 'Power Spot boosted ';
   }
   if (description.isSwitching) {
-    output += ' switching boosted ';
+    output += 'switching boosted ';
   }
   output += description.moveName + ' ';
   if (description.moveBP && description.moveType) {

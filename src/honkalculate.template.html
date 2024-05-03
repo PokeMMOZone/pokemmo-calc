@@ -75,8 +75,9 @@
             <span class="visually-hidden" id="selectModeInstruction">Select the calculator's mode of function.</span>
             <input class="mode visually-hidden" type="radio" name="mode" id="one-vs-one" checked="checked" /><label class="btn btn-left btn-wide" for="one-vs-one">One vs One</label>
             <input class="mode visually-hidden" type="radio" name="mode" id="one-vs-all" /><label class="btn btn-mid btn-wide gen-specific g3 g4 g5 g6 g7 g8 g9" for="one-vs-all">One vs All</label>
-            <input class="mode visually-hidden" type="radio" name="mode" id="all-vs-one" /><label class="btn btn-right btn-wide gen-specific g3 g4 g5 g6 g7 g8 g9" for="all-vs-one">All vs One</label>
-            <!-- <input class="mode visually-hidden" type="radio" name="mode" id="randoms" /><label class="btn btn-right btn-xwide" for="randoms">Random Battles</label> -->
+            <input class="mode visually-hidden" type="radio" name="mode" id="all-vs-one" /><label class="btn btn-mid btn-wide gen-specific g3 g4 g5 g6 g7 g8 g9" for="all-vs-one">All vs One</label>
+            <!-- <input class="mode visually-hidden" type="radio" name="mode" id="randoms" /><label class="btn btn-mid btn-xwide" for="randoms">Random Battles</label> -->
+            <!-- <input class="mode visually-hidden" type="radio" name="mode" id="oms" checked="checked" /><label class="btn btn-right btn-xwide" for="oms">Other Metagames</label> -->
         </span>
     </div>
     <hr />
@@ -126,7 +127,11 @@
                         </div>
                         <div>
                             <label>Level</label>
-                            <input class="level" value="100" />
+                            <!--
+                            We use inputmode="decimal" so that mobile devices will have a numpad appear when inputting values.
+                            https://css-tricks.com/everything-you-ever-wanted-to-know-about-inputmode/#aa-decimal
+                            -->
+                            <input class="level" value="100" inputmode="decimal" />
                         </div>
                         <div class="hide">
                             <label>Weight (kg)</label>
@@ -149,16 +154,16 @@
                                     <label>HP</label>
                                 </td>
                                 <td>
-                                    <input class="base" value="100" />
+                                    <input class="base" value="100" inputmode="decimal" />
                                 </td>
                                 <td class="gen-specific g3 g4 g5 g6 g7 g8 g9">
-                                    <input class="ivs" value="31" />
+                                    <input class="ivs" value="31" inputmode="decimal" />
                                 </td>
                                 <td class="gen-specific g3 g4 g5 g6 g7 g8 g9">
-                                    <input class="evs" type="number" min="0" max="252" step="4" value="0" />
+                                    <input class="evs" type="number" min="0" max="252" step="4" value="0" inputmode="decimal" />
                                 </td>
                                 <td class="gen-specific g1 g2 hide">
-                                    <input class="dvs" value="15" disabled="disabled" />
+                                    <input class="dvs" value="15" disabled="disabled" inputmode="decimal" />
                                 </td>
                                 <td><span class="total">341</span>
                                 </td>
@@ -169,16 +174,16 @@
                                     <label>Attack</label>
                                 </td>
                                 <td>
-                                    <input class="base" value="100" />
+                                    <input class="base" value="100" inputmode="decimal" />
                                 </td>
                                 <td class="gen-specific g3 g4 g5 g6 g7 g8 g9">
-                                    <input class="ivs" value="31" />
+                                    <input class="ivs" value="31" inputmode="decimal" />
                                 </td>
                                 <td class="gen-specific g3 g4 g5 g6 g7 g8 g9">
-                                    <input class="evs" type="number" min="0" max="252" step="4" value="0" />
+                                    <input class="evs" type="number" min="0" max="252" step="4" value="0" inputmode="decimal" />
                                 </td>
                                 <td class="gen-specific g1 g2 hide">
-                                    <input class="dvs" value="15" />
+                                    <input class="dvs" value="15" inputmode="decimal" />
                                 </td>
                                 <td><span class="total">236</span>
                                 </td>
@@ -205,16 +210,16 @@
                                     <label>Defense</label>
                                 </td>
                                 <td>
-                                    <input class="base" value="100" />
+                                    <input class="base" value="100" inputmode="decimal" />
                                 </td>
                                 <td class="gen-specific g3 g4 g5 g6 g7 g8 g9">
-                                    <input class="ivs" value="31" />
+                                    <input class="ivs" value="31" inputmode="decimal" />
                                 </td>
                                 <td class="gen-specific g3 g4 g5 g6 g7 g8 g9">
-                                    <input class="evs" type="number" min="0" max="252" step="4" value="0" />
+                                    <input class="evs" type="number" min="0" max="252" step="4" value="0" inputmode="decimal" />
                                 </td>
                                 <td class="gen-specific g1 g2 hide">
-                                    <input class="dvs" value="15" />
+                                    <input class="dvs" value="15" inputmode="decimal" />
                                 </td>
                                 <td><span class="total">236</span>
                                 </td>
@@ -241,16 +246,16 @@
                                     <label>Sp. Atk</label>
                                 </td>
                                 <td>
-                                    <input class="base" value="100" />
+                                    <input class="base" value="100" inputmode="decimal" />
                                 </td>
                                 <td class="gen-specific g3 g4 g5 g6 g7 g8 g9">
-                                    <input class="ivs" value="31" />
+                                    <input class="ivs" value="31" inputmode="decimal" />
                                 </td>
                                 <td class="gen-specific g3 g4 g5 g6 g7 g8 g9">
-                                    <input class="evs" type="number" min="0" max="252" step="4" value="0" />
+                                    <input class="evs" type="number" min="0" max="252" step="4" value="0" inputmode="decimal" />
                                 </td>
                                 <td class="gen-specific g1 g2 hide">
-                                    <input class="dvs" value="15" />
+                                    <input class="dvs" value="15" inputmode="decimal" />
                                 </td>
                                 <td><span class="total">236</span>
                                 </td>
@@ -277,16 +282,16 @@
                                     <label>Sp. Def</label>
                                 </td>
                                 <td>
-                                    <input class="base" value="100" />
+                                    <input class="base" value="100" inputmode="decimal" />
                                 </td>
                                 <td class="gen-specific g3 g4 g5 g6 g7 g8 g9">
-                                    <input class="ivs" value="31" />
+                                    <input class="ivs" value="31" inputmode="decimal" />
                                 </td>
                                 <td class="gen-specific g3 g4 g5 g6 g7 g8 g9">
-                                    <input class="evs" type="number" min="0" max="252" step="4" value="0" />
+                                    <input class="evs" type="number" min="0" max="252" step="4" value="0" inputmode="decimal" />
                                 </td>
                                 <td class="gen-specific g1 g2 hide">
-                                    <input class="dvs" value="15" disabled="disabled" />
+                                    <input class="dvs" value="15" disabled="disabled" inputmode="decimal" />
                                 </td>
                                 <td><span class="total">236</span>
                                 </td>
@@ -313,10 +318,10 @@
                                     <label>Special</label>
                                 </td>
                                 <td>
-                                    <input class="base" value="100" />
+                                    <input class="base" value="100" inputmode="decimal" />
                                 </td>
                                 <td>
-                                    <input class="dvs" value="15" />
+                                    <input class="dvs" value="15" inputmode="decimal" />
                                 </td>
                                 <td><span class="total">236</span>
                                 </td>
@@ -343,16 +348,16 @@
                                     <label>Speed</label>
                                 </td>
                                 <td>
-                                    <input class="base" value="100" />
+                                    <input class="base" value="100" inputmode="decimal" />
                                 </td>
                                 <td class="gen-specific g3 g4 g5 g6 g7 g8 g9">
-                                    <input class="ivs" value="31" />
+                                    <input class="ivs" value="31" inputmode="decimal" />
                                 </td>
                                 <td class="gen-specific g3 g4 g5 g6 g7 g8 g9">
-                                    <input class="evs" type="number" min="0" max="252" step="4" value="0" />
+                                    <input class="evs" type="number" min="0" max="252" step="4" value="0" inputmode="decimal" />
                                 </td>
                                 <td class="gen-specific g1 g2 hide">
-                                    <input class="dvs" value="15" />
+                                    <input class="dvs" value="15" inputmode="decimal" />
                                 </td>
                                 <td><span class="total">236</span>
                                 </td>
@@ -413,23 +418,23 @@
                             <label>Ability</label>
                             <select class="ability terrain-trigger"></select>
                             <input hidden type="checkbox" title= "Is this ability active?" class="abilityToggle">
-									 <select hidden aria-label="Allies fainted" class="alliesFainted calc-trigger">
-										  <option value="0">Zero allies fainted</option>
-										  <option value="1">One ally fainted</option>
-										  <option value="2">Two allies fainted</option>
-										  <option value="3">Three allies fainted</option>
-										  <option value="4">Four allies fainted</option>
-										  <option value="5">Five allies fainted</option>
-									 </select>
-									 <select hidden aria-label="Boosted Stat" title="What stat is boosted by this ability?" class="boostedStat calc-trigger">
-										  <option value="">Auto-Select</option>
-										  <option value="atk">Attack</option>
-										  <option value="def">Defense</option>
-										  <option value="spa">Special Attack</option>
-										  <option value="spd">Special Defense</option>
-										  <option value="spe">Speed</option>
-									 </select>
-
+                            <select hidden aria-label="Allies fainted" class="alliesFainted calc-trigger">
+                                <option value="0">Zero allies fainted</option>
+                                <option value="1">One ally fainted</option>
+                                <option value="2">Two allies fainted</option>
+                                <option value="3">Three allies fainted</option>
+                                <option value="4">Four allies fainted</option>
+                                <option value="5">Five allies fainted</option>
+                            </select>
+                            <select hidden aria-label="Boosted Stat" title="What stat is boosted by this ability?" class="boostedStat calc-trigger">
+                                <option value="auto">Auto-Select</option>
+                                <option value="">Inactive</option>
+                                <option value="atk">Attack</option>
+                                <option value="def">Defense</option>
+                                <option value="spa">Special Attack</option>
+                                <option value="spd">Special Defense</option>
+                                <option value="spe">Speed</option>
+                            </select>
                         </div>
                         <div class="gen-specific g2 g3 g4 g5 g6 g7 g8 g9">
                             <label>Item</label>
@@ -476,7 +481,7 @@
                     </div>
                     <div class="move1">
                         <select class="move-selector small-select"></select>
-                        <input class="move-bp" value="50" />
+                        <input class="move-bp" value="50" inputmode="decimal" />
                         <select class="move-type"></select>
                         <select class="move-cat gen-specific g4 g5 g6 g7 g8 g9">
                             <option value="Physical">Physical</option>
@@ -486,6 +491,8 @@
                         <label class="btn crit-btn" for="critL1" title="Force this attack to be a critical hit?">Crit</label>
                         <input class="move-z visually-hidden" type="checkbox" id="zL1"/>
                         <label class="btn z-btn gen-specific g7" for="zL1" title="Make this attack a Z-move?">Z</label>
+                        <input class="move-stellar visually-hidden" type="checkbox" id="stellarL1" />
+                        <label class="stellar-btn btn" style="display: none;" for="stellarL1" title="Make this attack Stellar boosted?">Stellar</label>
                         <select class="move-hits hide">
                             <option value="2">2 hits</option>
                             <option value="3">3 hits</option>
@@ -510,7 +517,7 @@
                     </div>
                     <div class="move2">
                         <select class="move-selector small-select"></select>
-                        <input class="move-bp" value="0" />
+                        <input class="move-bp" value="0" inputmode="decimal" />
                         <select class="move-type"></select>
                         <select class="move-cat gen-specific g4 g5 g6 g7 g8 g9">
                             <option value="Physical">Physical</option>
@@ -520,6 +527,8 @@
                         <label class="btn crit-btn" for="critL2" title="Force this attack to be a critical hit?">Crit</label>
                         <input class="move-z visually-hidden" type="checkbox" id="zL2"/>
                         <label class="btn z-btn gen-specific g7" for="zL2" title="Make this attack a Z-move?">Z</label>
+                        <input class="move-stellar visually-hidden" type="checkbox" id="stellarL2" />
+                        <label class="stellar-btn btn" style="display: none;" for="stellarL2" title="Make this attack Stellar boosted?">Stellar</label>
                         <select class="move-hits hide">
                             <option value="2">2 hits</option>
                             <option value="3">3 hits</option>
@@ -544,7 +553,7 @@
                     </div>
                     <div class="move3">
                         <select class="move-selector small-select"></select>
-                        <input class="move-bp" value="0" />
+                        <input class="move-bp" value="0" inputmode="decimal" />
                         <select class="move-type"></select>
                         <select class="move-cat gen-specific g4 g5 g6 g7 g8 g9">
                             <option value="Physical">Physical</option>
@@ -554,6 +563,8 @@
                         <label class="btn crit-btn" for="critL3" title="Force this attack to be a critical hit?">Crit</label>
                         <input class="move-z visually-hidden" type="checkbox" id="zL3"/>
                         <label class="btn z-btn gen-specific g7" for="zL3" title="Make this attack a Z-move?">Z</label>
+                        <input class="move-stellar visually-hidden" type="checkbox" id="stellarL3" />
+                        <label class="stellar-btn btn" style="display: none;" for="stellarL3" title="Make this attack Stellar boosted?">Stellar</label>
                         <select class="move-hits hide">
                             <option value="2">2 hits</option>
                             <option value="3">3 hits</option>
@@ -578,7 +589,7 @@
                     </div>
                     <div class="move4">
                         <select class="move-selector small-select"></select>
-                        <input class="move-bp" value="0" />
+                        <input class="move-bp" value="0" inputmode="decimal" />
                         <select class="move-type"></select>
                         <select class="move-cat gen-specific g4 g5 g6 g7 g8 g9">
                             <option value="Physical">Physical</option>
@@ -588,6 +599,8 @@
                         <label class="btn crit-btn" for="critL4" title="Force this attack to be a critical hit?">Crit</label>
                         <input class="move-z visually-hidden" type="checkbox" id="zL4"/>
                         <label class="btn z-btn gen-specific g7" for="zL4" title="Make this attack a Z-move?">Z</label>
+                        <input class="move-stellar visually-hidden" type="checkbox" id="stellarL4" />
+                        <label class="stellar-btn btn" style="display: none;" for="stellarL4" title="Make this attack Stellar boosted?">Stellar</label>
                         <select class="move-hits hide">
                             <option value="2">2 hits</option>
                             <option value="3">3 hits</option>
