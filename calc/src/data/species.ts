@@ -3510,7 +3510,7 @@ const DPP_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
     types: ['Ghost', 'Fighting'],
     bs: {hp: 90, at: 105, df: 90, sa: 65, sd: 110, sp: 65},
     weightkg: 44,
-    abilities: {0: 'Shed Skin'},
+    abilities: {0: 'Air Lock'},
   },
   Rhyperior: {
     types: ['Ground', 'Rock'],
