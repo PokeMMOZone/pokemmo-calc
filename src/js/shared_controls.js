@@ -1628,3 +1628,18 @@ $("#mainResult").click(function () {
 		}, 1500);
 	});
 });
+
+/* Set all EV to 85, then get all poke-info to set total stats */
+$("#evForRandomBattle").click(function (){
+	var list = document.getElementsByClassName('evs');
+	for (var n = 0; n < list.length; ++n){
+		list[n].value='85'
+	}
+
+	var pokeList = document.getElementsByClassName('poke-info');
+	for(var n = 0; n < pokeList.length; ++n){
+		var poke = $(pokeList[n]).closest(".poke-info")
+		calcStats(poke);
+	}
+
+});
