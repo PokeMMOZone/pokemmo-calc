@@ -1639,7 +1639,9 @@ $("#evForRandomBattle").click(function (){
 	var pokeList = document.getElementsByClassName('poke-info');
 	for(var n = 0; n < pokeList.length; ++n){
 		var poke = $(pokeList[n]).closest(".poke-info")
+		calcHP(poke);
 		calcStats(poke);
 	}
 
+	performCalculations();
 });
